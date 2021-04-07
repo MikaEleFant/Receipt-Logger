@@ -1,8 +1,15 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const passport = require('passport');
 const app = express();
 
-app.get("/", (req, res) => res.send("Hello World"));
+const users = require("./routes/api/users");
+
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(passport.initialize());
+require('./config/passport')(passport);
+app.use("/api/users", users);
 
 const db = require('./config/keys.js').mongoURI;
 
