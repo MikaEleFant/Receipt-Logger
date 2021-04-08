@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const ReceiptSchema = new Schema({
   _id: Schema.Types.ObjectId,
-  cardId: {
+  card: {
     type: Schema.Types.ObjectId,
     ref: "Card"
   },

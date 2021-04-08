@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const CardSchema = new Schema({
   _id: Schema.Types.ObjectId,
-  userId: {
+  user: {
     type: Schema.Types.ObjectId,
     ref: "User"
   },
@@ -14,6 +14,10 @@ const CardSchema = new Schema({
   isCredit: {
     type: Boolean,
     default: false
+  },
+  expires: {
+    type: Date,
+    required: true
   },
   billingCycle: {
     type: Date
