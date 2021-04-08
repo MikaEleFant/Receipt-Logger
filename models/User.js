@@ -9,7 +9,8 @@ const UserSchema = new Schema({
   password: {
     type: String,
     required: true
-  }
+  },
+  cards: [Schema.Types.ObjectId]
 })
 
 module.exports = User = mongoose.model('User', UserSchema);
