@@ -4,11 +4,11 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const passport = require("passport");
 
-const keys = require("../../config/keys");
-const User = require("../../models/User");
+const keys = require("../config/keys");
+const User = require("../models/User");
 
-const validateRegisterInput = require("../../validation/register");
-const validateLoginInput = require("../../validation/login");
+const validateRegisterInput = require("../validation/register");
+const validateLoginInput = require("../validation/login");
 
 router.get("/current", passport.authenticate("jwt", {session: false}), (req, res) => {
   res.json({
@@ -26,12 +26,13 @@ router.post("/register", (req, res) => {
 
   User.findOne({ username: req.body.username }).then(user => {
     if (user) {
-      errors.username = "User already exists";
+      errors.username = "A user with that username already exists.";
       return res.status(409).json(errors);
     } else {
       const newUser = new User({
         username: req.body.username,
-        password: req.body.password
+        password: req.body.password,
+        cards: []
       });
 
       bcrypt.genSalt(10, (err, salt) => {
@@ -49,9 +50,7 @@ router.post("/register", (req, res) => {
                 });
               });
             })
-            .catch(err => {
-              return res.status(500).json(err)
-            });
+            .catch(err => res.status(500).json(err));
         });
       });
     }
@@ -70,7 +69,7 @@ router.post("/login", (req, res) => {
 
   User.findOne({ username }).then(user => {
     if (!user) {
-      errors.username = "This user does not exist";
+      errors.username = "Incorrect username and/or password.";
       return res.status(400).json(errors);
     }
 
@@ -85,7 +84,7 @@ router.post("/login", (req, res) => {
           });
         });
       } else {
-        errors.password = "Incorrect password";
+        errors.password = "Incorrect username and/or password.";
         return res.status(400).json(errors);
       }
     });

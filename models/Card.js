@@ -19,7 +19,8 @@ const CardSchema = new Schema({
     index: { expires: "60 days" },
   },
   billingCycle: {
-    type: Date
+    type: Date,
+    default: "1111-11-11"
   },
   receipts: [{ type: Schema.Types.ObjectId, ref: "Receipt"}]
 })

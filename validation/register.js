@@ -3,8 +3,8 @@ const Validator = require("validator");
 module.exports = function validateRegisterInput(data) {
   let errors = {};
 
-  if (!Validator.isLength(data.username, {min: 8, max: 30})) {
-    errors.username = "Username must be between 8 and 30 characters.";
+  if (!Validator.isLength(data.username, {min: 6, max: 30})) {
+    errors.username = "Username must be between 6 and 30 characters.";
   }
 
   if (Validator.isEmpty(data.username)) {
