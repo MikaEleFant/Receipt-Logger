@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const ReceiptSchema = new Schema({
-  _id: Schema.Types.ObjectId,
   card: {
     type: Schema.Types.ObjectId,
     ref: "Card"

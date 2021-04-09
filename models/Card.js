@@ -2,22 +2,21 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const CardSchema = new Schema({
-  _id: Schema.Types.ObjectId,
   user: {
     type: Schema.Types.ObjectId,
     ref: "User"
+  },
+  isCredit: {
+    type: Boolean,
+    required: true
   },
   number: {
     type: Number,
     required: true
   },
-  isCredit: {
-    type: Boolean,
-    default: false
-  },
   expires: {
     type: Date,
-    required: true
+    index: { expires: "60 days" },
   },
   billingCycle: {
     type: Date

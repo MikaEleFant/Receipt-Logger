@@ -6,8 +6,9 @@ const passport = require("passport");
 
 const keys = require("../../config/keys");
 const User = require("../../models/User");
-const validateRegisterInput = require('../../validation/register');
-const validateLoginInput = require('../../validation/login');
+
+const validateRegisterInput = require("../../validation/register");
+const validateLoginInput = require("../../validation/login");
 
 router.get("/current", passport.authenticate("jwt", {session: false}), (req, res) => {
   res.json({
