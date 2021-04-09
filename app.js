@@ -1,17 +1,25 @@
-const express = require("express");
 const mongoose = require("mongoose");
-const passport = require("passport");
+
+const express = require("express");
 const app = express();
 
-const users = require("./routes/api/users");
+const passport = require("passport");
+require("./config/passport")(passport);
+
+const db = require("./config/keys.js").mongoURI;
+
+const users = require("./routes/users");
+const cards = require("./routes/cards");
+const receipts = require("./routes/receipts");
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(passport.initialize());
-require("./config/passport")(passport);
-app.use("/api/users", users);
 
-const db = require("./config/keys.js").mongoURI;
+app.use(passport.initialize());
+
+app.use("/users", users);
+app.use("/cards", cards);
+app.use("/receipts", receipts);
 
 mongoose
   .connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
